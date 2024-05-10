@@ -24,7 +24,7 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
-- Python 3.7+
+- Python 3.9+
 - Node.js 14+
 
 ### Installation
