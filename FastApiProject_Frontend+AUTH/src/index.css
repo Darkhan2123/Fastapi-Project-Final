@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  background-color: #f1f1f1;
+}
+
+/* Transparent Scrollbar Styling */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Track background */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5); /* Scroll handle color */
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+.menu-full-height {
+  height: calc(100vh - 60px); /* Adjust 60px based on the height of the top bar */
+  overflow-y: auto;
+}
+
+.top-bar {
+  background-color: #f0f2f5; /* Light grey background */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  z-index: 1000; /* Ensures it stays on top */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
