@@ -1,9 +1,9 @@
 from src.init import cmc_client
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, BackgroundTasks
 from src.auth import get_current_active_user, User
 from pydantic import BaseModel, Field
 from typing import List, Optional
-
+from src.tasks import fetch_and_store_cryptocurrency_details
 class Quote(BaseModel):
     price: float
     volume_24h: float = Field(..., alias='volume_24h')
@@ -33,10 +33,14 @@ router = APIRouter(prefix='/cryptocurrencies')
 @router.get('', response_model=List[Cryptocurrency])
 async def get_cryptocurrencies(current_user: User = Depends(get_current_active_user)):
     raw_data = await cmc_client.get_listings()
-
     return raw_data
 
 @router.get('/{currency_id}', response_model=dict)
 async def get_cryptocurrency(currency_id: int, current_user: User = Depends(get_current_active_user)):
     currency = await cmc_client.get_currency(currency_id)
     return currency
+
+@router.post('/fetch-details/{currency_id}')
+async def trigger_fetch_and_store_cryptocurrency_details(currency_id: int, background_tasks: BackgroundTasks):
+    background_tasks.add_task(fetch_and_store_cryptocurrency_details.send, currency_id)
+    return {"message": "Task dispatched"}
